@@ -6,4 +6,6 @@ class RegisterViewModel {
     var name = mutableStateOf("")
     var email = mutableStateOf("")
     var password = mutableStateOf("")
+    var phone = mutableStateOf("")
+    var loading = mutableStateOf(false)
 }

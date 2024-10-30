@@ -43,7 +43,7 @@ fun GetStartedScreen() {
                     .height(300.dp)
             )
             Text(
-                style = Typography.titleLarge,
+                style = Typography.bodyLarge,
                 text = "Enjoy your meals",
                 color = white,
                 fontWeight = FontWeight.Bold, // Set font weight to bold
@@ -56,7 +56,7 @@ fun GetStartedScreen() {
             onClick = {},
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier
-                .width(250.dp).height(100.dp),
+                .padding(horizontal = 48.dp, vertical = 8.dp),
             colors = ButtonDefaults.buttonColors(
                 contentColor = primaryColor,
                 containerColor = white,

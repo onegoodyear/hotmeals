@@ -35,8 +35,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-//    RegisterScreen(registerViewModel = RegisterViewModel())
-    GetStartedScreen()
+    RegisterScreen(registerViewModel = RegisterViewModel())
+//    GetStartedScreen()
 }
 
 @Preview(showBackground = true)

@@ -20,14 +20,12 @@ val Typography = Typography(
         fontFamily = Poppins,
         fontWeight = FontWeight.Bold,
         fontSize = 40.sp,
-        lineHeight = 44.sp,
         letterSpacing = 1.sp
     ),
     bodyLarge = TextStyle(
         fontFamily = Poppins,
         fontWeight = FontWeight.Medium,
         fontSize = 28.sp,
-        lineHeight = 32.sp,
         letterSpacing = 0.5.sp
     ),
 
@@ -35,14 +33,12 @@ val Typography = Typography(
         fontFamily = Poppins,
         fontWeight = FontWeight.Medium,
         fontSize = 24.sp,
-        lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
     bodySmall = TextStyle(
         fontFamily = Poppins,
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
-        lineHeight = 24.sp,
         letterSpacing = 0.sp
     ),
 
