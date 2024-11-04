@@ -17,6 +17,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,14 +25,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.hotmeals.screens.router.Router
 import com.example.hotmeals.ui.theme.Typography
 import com.example.hotmeals.ui.theme.primaryColor
 import com.example.hotmeals.ui.theme.white
+import com.example.hotmeals.viewmodels.AuthViewModel
 import com.example.hotmeals.viewmodels.RegisterViewModel
 
 
 @Composable
-fun RegisterScreen(registerViewModel: RegisterViewModel) {
+fun RegisterScreen(navController: NavController, registerViewModel: RegisterViewModel, authViewModel: AuthViewModel) {
 
     Column (
         modifier = Modifier
@@ -115,16 +119,25 @@ fun RegisterScreen(registerViewModel: RegisterViewModel) {
                         color = Color.White
                     )
                 }
-
             }
             Text(
                 modifier = Modifier
-                    .padding(15.dp),
+                    .padding(15.dp).clickable { navController.navigate("login") },
                 text = "Already Have an account? sign In",
                 style = Typography.bodySmall.copy(fontSize = 16.sp),
                 color = primaryColor,
 
                 )
+        }
+    }
+    LaunchedEffect(key1 = registerViewModel.success.value) {
+        if (registerViewModel.success.value) {
+            navController.navigate(Router.Login.route)
+        }
+    }
+    LaunchedEffect(key1 = registerViewModel.isLoggedIn.value) {
+        if(registerViewModel.isLoggedIn.value){
+            navController.navigate(Router.Profile.route)
         }
     }
 }
