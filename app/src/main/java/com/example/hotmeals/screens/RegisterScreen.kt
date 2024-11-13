@@ -10,9 +10,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -35,7 +41,7 @@ import com.example.hotmeals.viewmodels.RegisterViewModel
 
 
 @Composable
-fun RegisterScreen(navController: NavController, registerViewModel: RegisterViewModel, authViewModel: AuthViewModel) {
+fun RegisterScreen(navController: NavController, registerViewModel: RegisterViewModel) {
 
     Column (
         modifier = Modifier
@@ -59,42 +65,45 @@ fun RegisterScreen(navController: NavController, registerViewModel: RegisterView
                 modifier = Modifier.fillMaxWidth(),
                 value = registerViewModel.name.value,
                 onValueChange = { registerViewModel.name.value = it },
-                label = { Text(text = "Name", color = primaryColor, style = Typography.bodySmall) },
+                label = { Text(text = "Name", color = primaryColor, style = Typography.bodyMedium) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "nameIcon") },
                 shape = RoundedCornerShape(12.dp),
-                placeholder = { Text(text = "Enter your name", color = primaryColor.copy(0.5f), style = Typography.bodySmall)},
-                textStyle = Typography.bodySmall
+                placeholder = { Text(text = "Enter your name", color = primaryColor.copy(0.5f), style = Typography.bodyMedium)},
+                textStyle = Typography.bodyMedium
             )
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = registerViewModel.email.value,
+                leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "emaildIcon") },
                 onValueChange = { registerViewModel.email.value = it },
-                label = { Text(text = "Email", color = primaryColor, style = Typography.bodySmall) },
+                label = { Text(text = "Email", color = primaryColor, style = Typography.bodyMedium) },
                 shape = RoundedCornerShape(12.dp),
-                placeholder = { Text(text = "Enter your email", color = primaryColor.copy(0.5f), style = Typography.bodySmall )},
-                textStyle = Typography.bodySmall
+                placeholder = { Text(text = "Enter your email", color = primaryColor.copy(0.5f), style = Typography.bodyMedium )},
+                textStyle = Typography.bodyMedium
             )
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = registerViewModel.phone.value,
-                onValueChange = { registerViewModel.name.value = it },
-                label = { Text(text = "Phone Number", color = primaryColor, style = Typography.bodySmall) },
+                value = registerViewModel.phoneNumber.value,
+                onValueChange = { registerViewModel.phoneNumber.value = it },
+                leadingIcon = { Icon(imageVector = Icons.Default.Call, contentDescription = "passwordIcon") },
+                label = { Text(text = "Phone Number", color = primaryColor, style = Typography.bodyMedium) },
                 shape = RoundedCornerShape(12.dp),
-                placeholder = { Text(text = "Enter your phone number", color = primaryColor.copy(0.5f), style = Typography.bodySmall,) },
-                textStyle = Typography.bodySmall
+                placeholder = { Text(text = "Enter your phone number", color = primaryColor.copy(0.5f), style = Typography.bodyMedium,) },
+                textStyle = Typography.bodyMedium
             )
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = registerViewModel.password.value,
                 onValueChange = { registerViewModel.password.value = it },
-                label = { Text(text = "Password", color = primaryColor, style = Typography.bodySmall) },
-                placeholder = { Text(text = "Enter a password", color = primaryColor.copy(0.5f), style = Typography.bodySmall ) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "passwordIcon") },
+                label = { Text(text = "Password", color = primaryColor, style = Typography.bodyMedium) },
+                placeholder = { Text(text = "Enter a password", color = primaryColor.copy(0.5f), style = Typography.bodyMedium ) },
                 shape = RoundedCornerShape(12.dp),
                 visualTransformation = PasswordVisualTransformation(),
-                textStyle = Typography.bodySmall
+                textStyle = Typography.bodyMedium
             )
 
             Button(
-
                 modifier = Modifier
                     .fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
@@ -103,13 +112,14 @@ fun RegisterScreen(navController: NavController, registerViewModel: RegisterView
                 ),
                 shape = RoundedCornerShape(12.dp),
                 onClick = {
+                    registerViewModel.register()
                 }
             ) {
                 Text(
                     text = "Sign Up",
                     color = Color.White,
                     modifier = Modifier.padding(7.dp),
-                    style = Typography.bodySmall,
+                    style = Typography.bodyMedium,
                 )
                 if (registerViewModel.loading.value) {
                     CircularProgressIndicator(
@@ -124,7 +134,7 @@ fun RegisterScreen(navController: NavController, registerViewModel: RegisterView
                 modifier = Modifier
                     .padding(15.dp).clickable { navController.navigate("login") },
                 text = "Already Have an account? sign In",
-                style = Typography.bodySmall.copy(fontSize = 16.sp),
+                style = Typography.bodyMedium.copy(fontSize = 16.sp),
                 color = primaryColor,
 
                 )

@@ -1,5 +1,7 @@
 package com.example.hotmeals.screens
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -18,6 +23,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,7 +41,7 @@ import com.example.hotmeals.screens.router.Router
 
 @Composable
 fun LoginScreen(navController: NavController, authViewModel: AuthViewModel, redirectedRoute: String? = null) {
-
+    val context = LocalContext.current
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,22 +62,24 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel, redi
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = authViewModel.email.value,
+                leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "emailIcon") },
                 onValueChange = { authViewModel.email.value = it },
-                label = { Text(text = "Email", color = primaryColor, style = Typography.bodySmall) },
+                label = { Text(text = "identfier", color = primaryColor, style = Typography.bodyMedium) },
                 shape = RoundedCornerShape(12.dp),
-                placeholder = { Text(text = "Enter your email", color = primaryColor.copy(0.5f), style = Typography.bodySmall) },
-                textStyle = Typography.bodySmall
+                placeholder = { Text(text = "email or phone number", color = primaryColor.copy(0.5f), style = Typography.bodyMedium) },
+                textStyle = Typography.bodyMedium
             )
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = authViewModel.password.value,
                 onValueChange = { authViewModel.password.value = it },
-                label = { Text(text = "Password", color = primaryColor, style = Typography.bodySmall) },
-                placeholder = { Text(text = "Enter a password", color = primaryColor.copy(0.5f), style = Typography.bodySmall) },
+                label = { Text(text = "password", color = primaryColor, style = Typography.bodyMedium) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "passwordIcon") },
+                placeholder = { Text(text = "...password", color = primaryColor.copy(0.5f), style = Typography.bodyMedium) },
                 shape = RoundedCornerShape(12.dp),
                 visualTransformation = PasswordVisualTransformation(),
-                textStyle = Typography.bodySmall
+                textStyle = Typography.bodyMedium
             )
 
             Button(
@@ -89,7 +97,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel, redi
                     text = "Login",
                     color = Color.White,
                     modifier = Modifier.padding(7.dp),
-                    style = Typography.bodySmall,
+                    style = Typography.bodyMedium,
                 )
                 if (authViewModel.loading.value) {
                     CircularProgressIndicator(
@@ -103,7 +111,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel, redi
                 Text(
                     text = authViewModel.error.value,
                     color = Color.Red,
-                    style = Typography.bodySmall,
+                    style = Typography.bodyMedium,
                     modifier = Modifier.padding(top = 8.dp)
                 )
             }
@@ -111,7 +119,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel, redi
 
         Text(
             text = "Forgot password?",
-            style = Typography.bodySmall,
+            style = Typography.bodyMedium,
             color = primaryColor,
             modifier = Modifier.padding(top = 10.dp)
         )
@@ -119,15 +127,15 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel, redi
         Text(
             modifier = Modifier
                 .padding(15.dp)
-                .clickable { navController.navigate("register") },
+                .clickable { navController.navigate(Router.Register.route) },
             text = "Don't have an account? Register",
-            style = Typography.bodySmall,
+            style = Typography.bodyMedium,
         )
 
         Text(
             modifier = Modifier.padding(top = 40.dp),
             text = "Or connect with",
-            style = Typography.bodySmall,
+            style = Typography.bodyMedium,
         )
 
         Row(
@@ -146,20 +154,24 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel, redi
             }
         }
     }
-
-    // Navigation when login is successful
     LaunchedEffect(key1 = authViewModel.success.value) {
         if (authViewModel.success.value) {
+            Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
             navController.navigate(redirectedRoute ?: Router.Profile.route)
         }
     }
 
-    // Redirect if already logged in
+    LaunchedEffect(key1 = authViewModel.error.value) {
+        if (authViewModel.error.value.isNotEmpty()) {
+            Toast.makeText(context, "Error: ${authViewModel.error.value}", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
     LaunchedEffect(key1 = authViewModel.isLoggedIn.value) {
         if (authViewModel.isLoggedIn.value) {
+            Toast.makeText(context, "Already logged in", Toast.LENGTH_SHORT).show()
             navController.navigate(Router.Profile.route)
         }
     }
-
 
 }

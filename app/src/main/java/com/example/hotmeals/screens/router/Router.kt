@@ -8,7 +8,7 @@ sealed class Router(val route: String) {
 
     data object Profile : Router("profile")
 
-    data object RestaurantList : Router("restaurant_list")
+    data object Restaurants : Router("restaurants")
     data object RestaurantDetails : Router("restaurant_details/{restaurantId}") {
         fun createRoute(restaurantId: String) = "restaurant_details/$restaurantId"
     }
@@ -31,5 +31,8 @@ sealed class Router(val route: String) {
     data object Settings : Router("settings")
     data object HelpCenter : Router("help_center")
 
+    data object Home : Router("home")
+
+    data object Orders: Router("orders")
 
 }
