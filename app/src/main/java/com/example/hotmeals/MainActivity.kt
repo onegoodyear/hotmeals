@@ -6,33 +6,31 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.hotmeals.screens.GetStartedScreen
-import com.example.hotmeals.screens.HomeScreen
-import com.example.hotmeals.screens.LoginScreen
-import com.example.hotmeals.screens.RegisterScreen
-import com.example.hotmeals.screens.RestaurantsScreen
-import com.example.hotmeals.screens.navigation_bar.BottomNavigationBarItems
-import com.example.hotmeals.screens.router.Router
+import com.example.hotmeals.views.GetStartedScreen
+import com.example.hotmeals.views.HomeScreen
+import com.example.hotmeals.views.LoginScreen
+import com.example.hotmeals.views.profile.ProfileScreen
+import com.example.hotmeals.views.RegisterScreen
+import com.example.hotmeals.views.RestaurantsScreen
+import com.example.hotmeals.views.navigation.NavItem
+import com.example.hotmeals.views.navigation.NavItemBox
+import com.example.hotmeals.views.router.Router
 import com.example.hotmeals.ui.theme.HotmealsTheme
-import com.example.hotmeals.ui.theme.primaryColor
-import com.example.hotmeals.ui.theme.white
 import com.example.hotmeals.viewmodels.AuthViewModel
 import com.example.hotmeals.viewmodels.RegisterViewModel
 
@@ -108,7 +106,9 @@ fun AppNavHost(navController: NavHostController, authViewModel: AuthViewModel, r
             )
         }
         composable(Router.Profile.route) {
-            Text(text = "Profile")
+            ProfileScreen(
+                navController = navController
+            )
         }
         composable(Router.Orders.route) {
             Text(text = "Orders")
@@ -122,16 +122,16 @@ fun BottomNavigationBar(navController: NavController) {
     val navBackStackEntry = navController.currentBackStackEntryAsState().value
     val currentRoute = navBackStackEntry?.destination?.route
 
-    BottomNavigation(backgroundColor = Color.White) {
-        BottomNavigationBarItems.values().forEach { item ->
+    BottomNavigation(backgroundColor = if (isSystemInDarkTheme()) Color.Black else Color.LightGray) {
+        NavItem.values().forEach { item ->
             val isSelected = currentRoute == item.route
-            BottomNavigationItem(
-                icon = { Icon(item.icon, contentDescription = item.title) },
-                selected = isSelected,
+            NavItemBox(
+                navItem = item,
+                isSelected = isSelected,
                 onClick = {
                     if (!isSelected) {
                         navController.navigate(item.route) {
-                            popUpTo(navController.graph.startDestinationId) {
+                            popUpTo(Router.Home.route) {
                                 saveState = true
                             }
                             launchSingleTop = true
@@ -139,11 +139,7 @@ fun BottomNavigationBar(navController: NavController) {
                         }
                     }
                 },
-                selectedContentColor = primaryColor,
-                unselectedContentColor = Color.Gray
             )
         }
     }
 }
-
-

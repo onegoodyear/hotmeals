@@ -1,4 +1,4 @@
-package com.example.hotmeals.screens.router
+package com.example.hotmeals.views.router
 
 sealed class Router(val route: String) {
 

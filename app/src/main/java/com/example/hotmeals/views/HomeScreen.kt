@@ -1,4 +1,4 @@
-package com.example.hotmeals.screens
+package com.example.hotmeals.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

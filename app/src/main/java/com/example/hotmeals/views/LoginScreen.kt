@@ -1,6 +1,5 @@
-package com.example.hotmeals.screens
+package com.example.hotmeals.views
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +27,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -37,7 +35,7 @@ import com.example.hotmeals.ui.theme.primaryColor
 import com.example.hotmeals.ui.theme.white
 import com.example.hotmeals.viewmodels.AuthViewModel
 import com.example.hotmeals.R
-import com.example.hotmeals.screens.router.Router
+import com.example.hotmeals.views.router.Router
 
 @Composable
 fun LoginScreen(navController: NavController, authViewModel: AuthViewModel, redirectedRoute: String? = null) {

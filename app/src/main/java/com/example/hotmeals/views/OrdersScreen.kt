@@ -1,9 +1,9 @@
-package com.example.hotmeals.screens
+package com.example.hotmeals.views
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun ProfileScreen() {
-    Text(text = "Profile Screen")
+fun OrdersScreen() {
+    Text(text = "Orders Screen")
 }

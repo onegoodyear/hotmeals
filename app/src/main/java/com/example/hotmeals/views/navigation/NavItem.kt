@@ -1,4 +1,4 @@
-package com.example.hotmeals.screens.navigation_bar
+package com.example.hotmeals.views.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
@@ -7,46 +7,45 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.hotmeals.screens.RegisterScreen
-import com.example.hotmeals.screens.router.Router
+import com.example.hotmeals.views.router.Router
 
-sealed class BottomNavigationBarItems(
+sealed class NavItem(
     val title: String,
     val icon: ImageVector,
     val route: String
 ) {
-    object Restaurants : BottomNavigationBarItems(
+    object Restaurants : NavItem(
         title = "Restaurants",
         icon = Icons.Default.Place,
         route = Router.Home.route
     )
 
-    object Orders : BottomNavigationBarItems(
+    object Orders : NavItem(
         title = "Orders",
         icon = Icons.Default.ShoppingCart,
         route = Router.Orders.route
     )
 
-    object Profile : BottomNavigationBarItems(
+    object Profile : NavItem(
         title = "Profile",
         icon = Icons.Default.Person,
         route = Router.Profile.route
     )
 
-    object Auth : BottomNavigationBarItems(
+    object Auth : NavItem(
         title = "Auth",
         icon = Icons.Default.Lock,
         route = Router.Login.route
     )
 
-    object Register : BottomNavigationBarItems(
+    object Register : NavItem(
         title = "Register",
         icon = Icons.Default.Face,
         route = Router.Register.route
     )
 
     companion object {
-        fun values(): List<BottomNavigationBarItems> {
+        fun values(): List<NavItem> {
             return listOf(Restaurants, Orders, Profile, Auth, Register)
         }
     }
