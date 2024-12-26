@@ -16,14 +16,12 @@ interface AuthApi {
     )
 
     data class LoginResponse(
-        val token: String,
-        val userId: String
+        val userId: String,
+        val token: String
     )
 
-    @POST("auth/login")
+    @POST("/auth/login")
     suspend fun loginUser(@Body body: LoginRequest): Response<LoginResponse>
-
-
 
     //Register
     data class RegisterRequest(
@@ -38,14 +36,13 @@ interface AuthApi {
         val id: String
     )
 
-    @POST("auth/register")
+    @POST("/auth/register")
     suspend fun registerUser(@Body body: RegisterRequest): Response<RegisterResponse>
 
 
 
-
     companion object {
-        private const val BASE_URL = "https://hotmeals-back.onrender.com/"
+        private const val BASE_URL = "https://0056-129-45-123-131.ngrok-free.app"
 
         fun create(): AuthApi {
             val retrofit = Retrofit.Builder()
